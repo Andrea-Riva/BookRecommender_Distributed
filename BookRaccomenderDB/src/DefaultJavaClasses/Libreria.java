@@ -1,4 +1,4 @@
-package GenericJavaClasses;
+package DefaultJavaClasses;
 
 public class Libreria {
     String nomeLibreria;
@@ -22,6 +22,4 @@ public class Libreria {
     public int getIdUtente() {
         return idUtente;
     }
-
-
 }

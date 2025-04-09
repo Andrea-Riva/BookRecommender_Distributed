@@ -1,15 +1,13 @@
 package DBClasses;
 
-import GenericJavaClasses.UserIDError;
-import GenericJavaClasses.UserSession;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import DefaultJavaClasses.UserIDError;
+import DefaultJavaClasses.UserSession;
 
-public class ValutazioneManager {
-
+public class DBValutazioneManager {
     /**
      * Metodo per aggiungere una valutazione al libro, verifica che l'id utente sia > 0.
      * La verifica dei valori (1...5) non è stata gestita poiché viene effettuata dal DB.
@@ -68,4 +66,3 @@ public class ValutazioneManager {
         } return  false;
     }
 }
-

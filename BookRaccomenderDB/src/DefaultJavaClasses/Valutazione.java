@@ -1,4 +1,4 @@
-package GenericJavaClasses;
+package DefaultJavaClasses;
 
 public class Valutazione {
     Libro libro;
@@ -94,6 +94,5 @@ public class Valutazione {
     public boolean checkValid(int value){
         return value > 1 && value <5;
     }
-
 
 }

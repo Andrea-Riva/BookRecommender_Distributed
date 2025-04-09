@@ -6,20 +6,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import DefaultJavaClasses.Libro;
 
 public class DBSearchingTools {
-
     /**
      * Metodo per la ricerca di libri tramite titolo.
      *
      * @param titolo
      * @param conn
-     * @return List<GenericJavaClasses.Libro> libriReturn
+     * @return List<DefaultJavaClasses.Libro> libriReturn
      * @throws SQLException
      */
     public List<Libro> searchByTitolo(String titolo, Connection conn) throws SQLException {
         List<Libro> libriReturn = new ArrayList<>();
-        String query = "SELECT * FROM Libri WHERE titolo LIKE ?";
+        String query = "SELECT * FROM Libri WHERE LOWER(titolo) LIKE LOWER(?)";
 
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, "%" + titolo + "%");
@@ -43,12 +43,12 @@ public class DBSearchingTools {
      *
      * @param auth
      * @param conn
-     * @return List<GenericJavaClasses.Libro> libriReturn
+     * @return List<DefaultJavaClasses.Libro> libriReturn
      * @throws SQLException
      */
     public List<Libro> searchByAutore(String auth, Connection conn) throws SQLException {
         List<Libro> libriReturn = new ArrayList<>();
-        String query = "SELECT * FROM Libri WHERE autore LIKE ?";
+        String query = "SELECT * FROM Libri WHERE LOWER(autore) LIKE LOWER(?)";
 
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, "%" + auth + "%");
@@ -73,13 +73,13 @@ public class DBSearchingTools {
      * @param auth
      * @param anno
      * @param conn
-     * @return List<GenericJavaClasses.Libro> libriReturn
+     * @return List<DefaultJavaClasses.Libro> libriReturn
      * @throws SQLException
      */
 
     public List<Libro> searchByAutAndAnno(String auth, int anno, Connection conn) throws SQLException {
         List<Libro> libriReturn = new ArrayList<>();
-        String query = "SELECT * FROM Libri WHERE autore LIKE ? AND anno_pubblicazione = ?";
+        String query = "SELECT * FROM Libri WHERE LOWER(autore) LIKE LOWER(?) AND anno_pubblicazione = ?";
 
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, "%" + auth + "%");
@@ -98,4 +98,6 @@ public class DBSearchingTools {
         return libriReturn;
     }
 }
+
+
 

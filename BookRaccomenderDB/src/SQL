@@ -17,13 +17,21 @@ CREATE TABLE UtentiRegistrati(
 );
 
 CREATE TABLE Librerie(
+    id_libreria SERIAL PRIMARY KEY,
 	id_utente INT NOT NULL,
 	nome VARCHAR(20) NOT NULL,
-	id_libro INT NOT NULL,
 
-	PRIMARY KEY(id_utente, nome, id_libro),
-	FOREIGN KEY(id_utente) REFERENCES UtentiRegistrati(id_utente),
-	FOREIGN KEY(id_libro) REFERENCES Libri(id_libro)
+	PRIMARY KEY(id_utente, nome),
+	FOREIGN KEY(id_utente) REFERENCES UtentiRegistrati(id_utente)
+);
+
+CREATE TABLE Libri_Librerie(
+id_libreria INT NOT NULL,
+id_libro INT NOT NULL,
+
+PRIMARY KEY(id_libreria, id_libro),
+FOREIGN KEY(id_ibreria) REFERENCES Librerie(id_libreria),
+FOREIGN KEY(id_libro) REFERENCES Libri(id_libro)
 );
 
 CREATE TABLE ValutazioniLibri(
@@ -54,8 +62,13 @@ CREATE TABLE ValutazioniLibri(
 CREATE TABLE ConsigliLibri(
 	id_utente INT NOT NULL,
 	id_libro_referenced INT NOT NULL,
-	id_libro_suggested INT NOT NULL,
+	id_libro_suggested1 INT NOT NULL,
+	id_libro_suggested1 INT,
+	id_libro_suggested1 INT,
 
 	PRIMARY KEY(id_utente, id_libro_referenced, id_libro_suggested),
 	FOREIGN KEY(id_libro_referenced) REFERENCES Libri(id_libro),
 	FOREIGN KEY(id_libro_suggested) REFERENCES Libri(id_libro)
+
+	//Modificato Librerie con 2 tabelle Librerie e Libri_Librerie
+	//Modificato ConsigliLibri con 3 libro_suggested, il primo obbligatorio e gli altri opzionali(max 3)

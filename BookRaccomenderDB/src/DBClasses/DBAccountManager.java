@@ -1,12 +1,13 @@
 package DBClasses;
 
-import GenericJavaClasses.UserSession;
-import org.mindrot.jbcrypt.BCrypt;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import org.mindrot.jbcrypt.*;
+import DefaultJavaClasses.UserSession;
 
-import java.sql.*;
-
-public class DBAccountManagement {
-
+public class DBAccountManager {
     /**
      * Metodo per inserire un account nel DB, se il codice fiscale o la mail
      * è già stata usata, l'inserimento non viene effettuato.
@@ -26,11 +27,11 @@ public class DBAccountManagement {
         String hashedPass = BCrypt.hashpw(password, BCrypt.gensalt());
 
         if (isCfUsed(codiceFiscale, conn)) {
-            System.out.println("Errore, mail già in uso");
+            System.out.println("Errore, codice fiscale già in uso");
             return false;
         }
         if (isMailUsed(mail, conn)) {
-            System.out.println("Errore, codice fiscale già in uso");
+            System.out.println("Errore, mail fiscale già in uso");
             return false;
         }
         PreparedStatement stmt = conn.prepareStatement(query);
@@ -49,8 +50,8 @@ public class DBAccountManagement {
     }
 
     /**
-     * Metodo per effettuare il login, imposta l'id utente nella variabile statica della
-     * classe GenericJavaClasses.UserSession.
+     * Metodo per effettuare il login, imposta l'id utente, nome e cognome, mail e codice fiscale
+     * nella variabile statica della classe DefaultJavaClasses.UserSession.
      *
      * @param mail
      * @param password
@@ -61,7 +62,8 @@ public class DBAccountManagement {
         if (!isMailUsed(mail, conn)) {
             return false;
         }
-        String query = "SELECT password, id_utente FROM UtentiRegistrati WHERE mail = ?";
+        String query = "SELECT password, id_utente, nome, cognome, codice_fiscale, mail " +
+                       "FROM UtentiRegistrati WHERE mail = ?";
 
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, mail);
@@ -69,10 +71,18 @@ public class DBAccountManagement {
 
         if (rs.next()) {
             int idUtente = rs.getInt("id_utente");
+            String nomeUtente = rs.getString("nome");
+            String cognomeUtente = rs.getString("cognome");
             String hashedPassword = rs.getString("password");
+            String email = rs.getNString("mail");
+            String codiceFiscale = rs.getString("codice_fiscale");
             if (BCrypt.checkpw(password, hashedPassword)) {
                 System.out.println("Login eseguito con successo");
                 UserSession.setUserID(idUtente);
+                UserSession.setUserName(nomeUtente);
+                UserSession.setUserSurname(cognomeUtente);
+                UserSession.setEmail(email);
+                UserSession.setCodice_Fiscale(codiceFiscale);
                 return true;
             } else System.out.println("Login non riuscito");
 
@@ -122,3 +132,4 @@ public class DBAccountManagement {
 
 
 }
+

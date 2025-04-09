@@ -1,19 +1,17 @@
 package DBClasses;
 
-import GenericJavaClasses.Libreria;
-import GenericJavaClasses.UserSession;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import DefaultJavaClasses.UserSession;
+import DefaultJavaClasses.Libreria;
 
-public class LibreriaManager {
-
+public class DBLibreriaManager {
     /**
-     * Metodo per la creazione di una GenericJavaClasses.Libreria, la tabella libreria è composta da una colonna
+     * Metodo per la creazione di una DefaultJavaClasses.Libreria, la tabella libreria è composta da una colonna
      * nome e id_utente a cui appartiene, l'id_utente viene recuperato automaticamente dalla
      * sessione corrente a cui ha effettuato il login.
      *
@@ -30,7 +28,7 @@ public class LibreriaManager {
             int rowsAffected = stmt.executeUpdate();
 
             if (rowsAffected > 0) {
-                System.out.println("GenericJavaClasses.Libreria creata con successo");
+                System.out.println("DefaultJavaClasses.Libreria creata con successo");
                 return true;
             } else {
                 System.out.println("Errore durante la creazione");
@@ -62,7 +60,7 @@ public class LibreriaManager {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("GenericJavaClasses.Libro aggiunto alla libreria con id " + idLibreria);
+                System.out.println("DefaultJavaClasses.Libro aggiunto alla libreria con id " + idLibreria);
                 return true;
             } else {
                 System.out.println("Errore durante l'aggiunta");
@@ -78,7 +76,7 @@ public class LibreriaManager {
 
     /**
      * Permette la visualizzazione delle librerie creati dagli utenti, restitituisce
-     * una lista di oggetti di tipo GenericJavaClasses.Libreria.
+     * una lista di oggetti di tipo DefaultJavaClasses.Libreria.
      *
      * @param mailUtente
      * @exception SQLException e
@@ -109,3 +107,4 @@ public class LibreriaManager {
 
     }
 }
+
